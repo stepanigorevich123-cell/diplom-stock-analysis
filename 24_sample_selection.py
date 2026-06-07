@@ -25,8 +25,17 @@ N_DROPPED_CBONDS = N_AFTER_PRICE_FILTER - N_AFTER_CBONDS      # 30
 
 # ── Чтение финальной панели ──────────────────────────────────────────────
 df = pd.read_csv(PANEL_FILE, parse_dates=['begin'])
+
+# Применяем тот же dropna фильтр, что в регрессионной выборке:
+# log-transform Amihud → набор требуемых регрессоров → dropna
+import numpy as np
+df['log_amihud'] = np.log1p(df['amihud'] * 1e9)
+
+REG_VARS = ['ret', 'size', 'bm', 'log_amihud', 'momentum', 'leverage']
+df_reg = df[REG_VARS].dropna()
+
 n_firms_final = df['ticker'].nunique()
-n_obs_final = len(df)
+n_obs_final = len(df_reg)
 
 assert n_firms_final == N_AFTER_CBONDS, (
     f"Несоответствие: в панели {n_firms_final} фирм, ожидалось {N_AFTER_CBONDS}"
@@ -60,5 +69,10 @@ print(f"Контрольные значения из panel_data.csv:")
 print(f"  N firms:    {n_firms_final}")
 print(f"  N firm-weeks: {n_obs_final:,}")
 print(f"  Период:     {df['begin'].min():%Y-%m-%d} — {df['begin'].max():%Y-%m-%d}")
-print(f"  Pre-shock:  {(df['begin'] < '2022-02-24').sum():,} наблюдений")
-print(f"  Post-shock: {(df['begin'] >= '2022-02-24').sum():,} наблюдений")
+
+# Pre/Post — с регрессионной выборки (после dropna)
+df_reg_with_begin = df.loc[df_reg.index, ['begin']].copy()
+pre_count = (df_reg_with_begin['begin'] < '2022-02-24').sum()
+post_count = (df_reg_with_begin['begin'] >= '2022-02-24').sum()
+print(f"  Pre-shock:  {pre_count:,} наблюдений")
+print(f"  Post-shock: {post_count:,} наблюдений")

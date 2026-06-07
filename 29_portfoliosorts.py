@@ -1,5 +1,5 @@
 """
-29_portfolio_sorts.py
+30_portfolio_sorts.py
 Long-Short Quintile Portfolio Sorts (Section 4.2.8, Table 7)
 
 Идея:
@@ -39,12 +39,10 @@ ANNUALIZE = 52            # 52 недели в году
 df = pd.read_csv(PANEL_FILE, parse_dates=['begin'])
 df['log_amihud'] = np.log1p(df['amihud'] * 1e9)
 
-# Винсоризация 1%/99% — согласуется с основной регрессией
-def winsorize(s, lo=0.01, hi=0.99):
-    return s.clip(s.quantile(lo), s.quantile(hi))
-
-for col in ['ret', 'size', 'bm', 'log_amihud', 'leverage']:
-    df[col] = winsorize(df[col])
+# В Section 4.2.8 портфельные сорты используют сырые недельные возвраты
+# и характеристики (без 1/99 винсоризации, без dropna по полному набору
+# регрессоров). Это даёт сопоставимость с regression results без двойного
+# срезания экстремумов через winsorize и interaction конструкцию.
 
 print(f"Загружено: {len(df):,} строк, {df['ticker'].nunique()} компаний")
 
