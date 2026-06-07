@@ -1,0 +1,23 @@
+# Данные и результаты (не выгружаются в репозиторий)
+data/
+outputs/
+
+# Артефакты сборки / wheel-файлы
+*.whl
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Секреты
+.env
+*.env
+
+# Системные файлы
+.DS_Store
+Thumbs.db

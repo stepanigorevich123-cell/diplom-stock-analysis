@@ -1,0 +1,9 @@
+linearmodels
+numpy
+pandas
+requests
+scipy
+scikit-learn
+statsmodels
+tqdm
+urllib3
