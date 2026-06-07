@@ -10,7 +10,7 @@
 
 | Этап | Скрипты | Назначение |
 |------|---------|------------|
-| Сбор данных | `01_download_prices.py`, `09_get_inn_dadata.py`, `10_parse_cbonds.py`, `get_cbr_fx.py`, `get_fx_rates.py`, `get_inn.py`, `get_market_cap.py` | Загрузка цен, ИНН, облигаций, курсов валют |
+| Сбор данных | `01_download_prices.py`, `10_parse_cbonds.py`, `get_cbr_fx.py`, `get_fx_rates.py`, `get_inn.py`, `get_market_cap.py` | Загрузка цен, ИНН, облигаций, курсов валют |
 | Очистка | `02_check_data.py`, `03_clean_data.py`, `12_clean_fundamentals.py`, `13_final_clean.py` | Проверка и очистка сырых данных |
 | Признаки | `04_detect_events.py`, `05_add_yndx.py`, `06_momentum.py`, `07_add_redomiciled.py`, `11_convert_currency.py`, `14_final_convert.py` | Расчёт событий, моментума, конвертация валют |
 | Панель | `15_build_panel.py` | Сборка панельных данных |
@@ -24,16 +24,6 @@
 
 ```bash
 pip install -r requirements.txt
-```
-
-## Секреты
-
-Скрипт `09_get_inn_dadata.py` использует API [DaData](https://dadata.ru/).
-Ключи задаются через переменные окружения:
-
-```bash
-export DADATA_API_KEY=ваш_ключ
-export DADATA_SECRET_KEY=ваш_секрет
 ```
 
 ## Примечание

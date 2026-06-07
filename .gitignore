@@ -18,6 +18,9 @@ env/
 .env
 *.env
 
+# DaData (исключён из публичного репозитория)
+09_get_inn_dadata.py
+
 # Системные файлы
 .DS_Store
 Thumbs.db
